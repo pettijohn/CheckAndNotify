@@ -13,10 +13,7 @@
             "program": "${workspaceFolder}/src/bin/Debug/net7.0/CheckAndNotify.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
-            "stopAtEntry": false,
-            "env": {
-                "WXSTATION": "KBFI"
-            }
+            "stopAtEntry": false
         },
         {
             "name": ".NET Core Attach",
