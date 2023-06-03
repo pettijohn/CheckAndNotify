@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Build.Containers" Version="0.4.0" />
+    <PackageReference Include="TaskSchedulerEngine" Version="22.26.8.42" />
     <PackageReference Include="UnitsNet" Version="5.16.0" />
   </ItemGroup>
 

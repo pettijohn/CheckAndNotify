@@ -1,4 +1,4 @@
-Sdocker-compose.yml:
+docker-compose.yml:
 ```
 version: '3.2'
 
@@ -15,4 +15,6 @@ TELEGRAM_URL="https://api.telegram.org/bot<id>:<secret>/sendMessage?chat_id=<id>
 COORDINATES=39.833333,-98.583333
 ```
 
-https://www.weather.gov/documentation/services-web-api
+## Docs
+* https://www.weather.gov/documentation/services-web-api
+* https://cdn.britannica.com/96/105496-050-2F0D405B/Mariner-compass-card.jpg 
