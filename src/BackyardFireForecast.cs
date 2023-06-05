@@ -18,7 +18,7 @@ public static class BackyardFireForecast
     public static void Exec()
     {
         var t = ExecAsync();
-        t.RunSynchronously();
+        t.Wait();
     }
     public static async Task ExecAsync()
     {
