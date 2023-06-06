@@ -29,6 +29,7 @@ internal class Program
             AppDomain.CurrentDomain.ProcessExit += (s, e) => runtime.RequestStop();
 
             var backyardSchedule = Util.FromCron(backyardCron)
+                .WithLocalTime()
                 .Execute((e, token) => 
                 {
                     BackyardFireForecast.Exec();
