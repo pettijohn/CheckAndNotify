@@ -3,13 +3,13 @@ $ErrorActionPreference = 'Stop'
 # Ensure version number on command line 
 if([String]::IsNullOrEmpty($Args[0])) { Write-Host "Version is required"; exit 1; }
 $version = $Args[0];
+if($version.StartsWith('v')) { Write-Host "Version must only be a number"; exit 1; }
 
 # Update csproj version number
 # Trim starting v --> v0.9.9 --> 0.9.9 because csproj version must be specific x.y.m.n format 
-$versionNum = $version.TrimStart('v')
 $projPath = get-item "src\CheckAndNotify.csproj"
 $csproj = [xml] (get-content $projPath)
-$csproj.Project.PropertyGroup.Version = $versionNum
+$csproj.Project.PropertyGroup.Version = $version
 $csProj.Save($projPath)
 
 # Ensure git committed (we will tag and push on release)

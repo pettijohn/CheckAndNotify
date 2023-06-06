@@ -8,6 +8,7 @@ dotnet publish --os linux --arch arm64 /t:PublishContainer -c Release
 docker image tag check-and-notify:$VERSION ghcr.io/pettijohn/check-and-notify:$VERSION
 docker image tag check-and-notify:$VERSION ghcr.io/pettijohn/check-and-notify:latest
 docker image push ghcr.io/pettijohn/check-and-notify:latest
+docker image push ghcr.io/pettijohn/check-and-notify:$VERSION
 
 # dotnet publish --os linux --arch x64 /t:PublishContainer -c Release
 # docker image tag check-and-notify:1.0.0 ghcr.io/pettijohn/check-and-notify:latest-amd64

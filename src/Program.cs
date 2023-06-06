@@ -14,6 +14,9 @@ internal class Program
         telegramUrl = Environment.GetEnvironmentVariable("TELEGRAM_URL");
         if (string.IsNullOrEmpty(telegramUrl)) throw new ArgumentNullException("TELEGRAM_URL");
 
+        var backyardCron = Environment.GetEnvironmentVariable("BACKYARDFIRE_CRON");
+        if (string.IsNullOrEmpty(backyardCron)) throw new ArgumentNullException("BACKYARDFIRE_CRON");
+
         if(args.Length != 0)
         {
             //any argument means run in debug mode & exit
@@ -25,21 +28,13 @@ internal class Program
             var runtime = new TaskEvaluationRuntime();
             AppDomain.CurrentDomain.ProcessExit += (s, e) => runtime.RequestStop();
 
-            //schedule it
-            var afternoon = new ScheduleRule()
-                // .AtHours(23)
-                // .AtMinutes(30)
-                .AtHours(23)
-                .AtMinutes(30)
-                .AtSeconds(0)
-                .WithName("BackyardFireForecast") //Optional ID for your reference 
+            var backyardSchedule = Util.FromCron(backyardCron)
                 .Execute((e, token) => 
                 {
                     BackyardFireForecast.Exec();
                     return true;
                 });
-
-            runtime.AddSchedule(afternoon);
+            runtime.AddSchedule(backyardSchedule);
 
             await runtime.RunAsync();
         }
