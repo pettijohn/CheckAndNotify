@@ -23,7 +23,7 @@ internal class Program
         var runtime = new TaskEvaluationRuntime();
         AppDomain.CurrentDomain.ProcessExit += (s, e) => runtime.RequestStop();
 
-        var heartbeat = new ScheduleRule()
+        var heartbeat = runtime.CreateSchedule()
             .WithName("Heartbeat")
             .AtSeconds(0)
             .AtMinutes(0)
@@ -32,7 +32,8 @@ internal class Program
                 Console.WriteLine($"Alive at {e.TimeScheduledUtc}"); return true; 
             });
 
-        var backyardSchedule = new ScheduleRule().FromCron(backyardCron)
+        var backyardSchedule = runtime.CreateSchedule()
+            .FromCron(backyardCron)
             .WithName("BackyardFireForecast")
             .WithLocalTime()
             .Execute((e, token) => 
@@ -40,9 +41,8 @@ internal class Program
                 BackyardFireForecast.Exec();
                 return true;
             });
-        runtime.AddSchedule(backyardSchedule);
 
-
+        Console.WriteLine(heartbeat.ToString());
         Console.WriteLine(backyardSchedule.ToString());
 
         await runtime.RunAsync();
