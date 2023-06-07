@@ -32,30 +32,4 @@ public static class Util
             Environment.SetEnvironmentVariable(key, val);
         }
     }
-
-    public static ScheduleRule FromCron(string cronExp)
-    {
-        /*
-
-        # Example of job definition:
-        # .---------------- minute (0 - 59)
-        # |  .------------- hour (0 - 23)
-        # |  |  .---------- day of month (1 - 31)
-        # |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
-        # |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
-        # |  |  |  |  |
-        # *  *  *  *  *
-
-        */
-        var cronParts = Regex.Split(cronExp.Trim(), @"\s+");
-        var rule = new ScheduleRule();
-        rule.Seconds     = new int[] { 0 };
-        rule.Minutes     = cronParts[0] == "*" ? new int[] { } : cronParts[0].Split(",").Select(s => Int32.Parse(s)).ToArray();
-        rule.Hours       = cronParts[1] == "*" ? new int[] { } : cronParts[1].Split(",").Select(s => Int32.Parse(s)).ToArray();
-        rule.DaysOfMonth = cronParts[2] == "*" ? new int[] { } : cronParts[2].Split(",").Select(s => Int32.Parse(s)).ToArray();
-        rule.Months      = cronParts[3] == "*" ? new int[] { } : cronParts[3].Split(",").Select(s => Int32.Parse(s)).ToArray();
-        rule.DaysOfWeek  = cronParts[4] == "*" ? new int[] { } : cronParts[4].Split(",").Select(s => Int32.Parse(s)).ToArray();
-
-        return rule;
-    }
 }

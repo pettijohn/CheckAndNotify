@@ -17,27 +17,35 @@ internal class Program
         var backyardCron = Environment.GetEnvironmentVariable("BACKYARDFIRE_CRON");
         if (string.IsNullOrEmpty(backyardCron)) throw new ArgumentNullException("BACKYARDFIRE_CRON");
 
-        if(args.Length != 0)
-        {
-            //any argument means run in debug mode & exit
+        // Run once at startup
+        BackyardFireForecast.Exec();
 
-            BackyardFireForecast.Exec();
-        }
-        else
-        {
-            var runtime = new TaskEvaluationRuntime();
-            AppDomain.CurrentDomain.ProcessExit += (s, e) => runtime.RequestStop();
+        var runtime = new TaskEvaluationRuntime();
+        AppDomain.CurrentDomain.ProcessExit += (s, e) => runtime.RequestStop();
 
-            var backyardSchedule = Util.FromCron(backyardCron)
-                .WithLocalTime()
-                .Execute((e, token) => 
-                {
-                    BackyardFireForecast.Exec();
-                    return true;
-                });
-            runtime.AddSchedule(backyardSchedule);
+        var heartbeat = new ScheduleRule()
+            .WithName("Heartbeat")
+            .AtSeconds(0)
+            .AtMinutes(0)
+            .Execute((e, token) => 
+            { 
+                Console.WriteLine($"Alive at {e.TimeScheduledUtc}"); return true; 
+            });
 
-            await runtime.RunAsync();
-        }
+        var backyardSchedule = new ScheduleRule().FromCron(backyardCron)
+            .WithName("BackyardFireForecast")
+            .WithLocalTime()
+            .Execute((e, token) => 
+            {
+                BackyardFireForecast.Exec();
+                return true;
+            });
+        runtime.AddSchedule(backyardSchedule);
+
+
+        Console.WriteLine(backyardSchedule.ToString());
+
+        await runtime.RunAsync();
+        
     }
 }
