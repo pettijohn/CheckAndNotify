@@ -8,10 +8,8 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Build.Containers" Version="0.4.0" />
+    <PackageReference Include="TaskSchedulerEngine" Version="23.159.1287" />
     <PackageReference Include="UnitsNet" Version="5.16.0" />
     <ContainerLabel Include="org.opencontainers.image.source" Value="https://github.com/pettijohn/CheckAndNotify/" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\TaskSchedulerEngine\src\TaskSchedulerEngine.csproj" />
   </ItemGroup>
 </Project>
