@@ -15,11 +15,7 @@ public record Heading(string Name, double DirDeg, double StartDeg, double EndDir
 
 public static class BackyardFireForecast
 {
-    public static void Exec()
-    {
-        var t = ExecAsync();
-        t.Wait();
-    }
+    
     public static async Task ExecAsync()
     {
         var coordinates = Environment.GetEnvironmentVariable("COORDINATES");

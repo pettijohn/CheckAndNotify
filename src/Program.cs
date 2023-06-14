@@ -18,7 +18,9 @@ internal class Program
         if (string.IsNullOrEmpty(backyardCron)) throw new ArgumentNullException("BACKYARDFIRE_CRON");
 
         // Run once at startup
-        BackyardFireForecast.Exec();
+        await Lotteries.MegaMillionsAsync();
+        await Lotteries.PowerballAsync();
+        await BackyardFireForecast.ExecAsync();
 
         var runtime = new TaskEvaluationRuntime();
         AppDomain.CurrentDomain.ProcessExit += (s, e) => runtime.RequestStop();
@@ -38,7 +40,33 @@ internal class Program
             .WithLocalTime()
             .Execute((e, token) => 
             {
-                BackyardFireForecast.Exec();
+                BackyardFireForecast.ExecAsync().Wait();
+                return true;
+            });
+
+        // Drawings are Mon, Wed, Sat; notify next mornings
+        runtime.CreateSchedule()
+            .WithName("Powerball")
+            .AtSeconds(0)
+            .AtMinutes(0)
+            .AtHours(6)
+            .AtDaysOfWeek(0, 2, 4)
+            .Execute((e, token) => 
+            {
+                Lotteries.PowerballAsync().Wait();
+                return true;
+            });
+
+        // Drawings are Tues & Fri; notify next mornings
+        runtime.CreateSchedule()
+            .WithName("Mega Millions")
+            .AtSeconds(0)
+            .AtMinutes(0)
+            .AtHours(6)
+            .AtDaysOfWeek(3, 6)
+            .Execute((e, token) => 
+            {
+                Lotteries.MegaMillionsAsync().Wait();
                 return true;
             });
 

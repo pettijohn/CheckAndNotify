@@ -1,6 +1,7 @@
 using System.Text.RegularExpressions;
 using TaskSchedulerEngine;
 using System.Linq;
+using System.Net;
 
 public static class Util
 {
@@ -30,6 +31,26 @@ public static class Util
             val = val.TrimStart('"').TrimEnd('"');
 
             Environment.SetEnvironmentVariable(key, val);
+        }
+    }
+
+    public static HttpClient? _httpClient = null;
+    public static HttpClient HttpClient
+    {
+        get 
+        {
+            if(_httpClient == null)
+            {
+                HttpClientHandler handler = new HttpClientHandler()
+                {
+                    AutomaticDecompression = DecompressionMethods.All
+                };        
+                _httpClient = new HttpClient(handler);
+                _httpClient.DefaultRequestHeaders.Add("User-Agent", $"Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Mobile Safari/537.36 Edg/114.0.1823.43"); 
+                _httpClient.DefaultRequestHeaders.Add("Accept", "application/json, text/json"); 
+                _httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br"); 
+            }
+            return _httpClient;
         }
     }
 }
