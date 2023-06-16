@@ -7,6 +7,10 @@ using AngleSharp;
 
 public class Lotteries
 {
+    public static Decimal NotifyMin
+    {
+        get => Decimal.Parse(Environment.GetEnvironmentVariable("LOTTO_NOTIFY_MIN")!) * 1_000_000; 
+    }
     public async static Task MegaMillionsAsync()
     {
         var url = $"https://www.megamillions.com/cmspages/utilservice.asmx/GetLatestDrawData";
@@ -19,9 +23,10 @@ public class Lotteries
         var nextJackpot = JsonNode.Parse(stripped)["Jackpot"]["NextPrizePool"].GetValue<Decimal>();
 
         var message = $"Next Mega Millions: {nextDrawing.ToString("ddd dd MMM")} ${nextJackpot / 1000000:.} Million";
-        if(nextJackpot < 400_000_000)
-            Console.WriteLine(message);
-        else
+
+        Console.WriteLine(message);
+
+        if(nextJackpot > NotifyMin)
             await Util.Log(message);
     }
 
@@ -43,9 +48,8 @@ public class Lotteries
         }
         var message = $"Next Powerball: {nextDrawing.ToString("ddd dd MMM")} {nextJackpotText}";
 
-        if(nextJackpot < 400_000_000)
-            Console.WriteLine(message);
-        else
+        Console.WriteLine(message);
+        if(nextJackpot > NotifyMin)
             await Util.Log(message);
     }
 }
