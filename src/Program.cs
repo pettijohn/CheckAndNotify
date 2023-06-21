@@ -1,4 +1,5 @@
 
+using Microsoft.AspNetCore.Identity;
 using TaskSchedulerEngine;
 
 internal class Program
@@ -25,6 +26,8 @@ internal class Program
         var runtime = new TaskEvaluationRuntime();
         AppDomain.CurrentDomain.ProcessExit += (s, e) => runtime.RequestStop();
 
+        var pst = TimeZoneInfo.FindSystemTimeZoneById("America/Los_Angeles");
+
         var heartbeat = runtime.CreateSchedule()
             .WithName("Heartbeat")
             .AtSeconds(0)
@@ -37,12 +40,13 @@ internal class Program
         var backyardSchedule = runtime.CreateSchedule()
             .FromCron(backyardCron)
             .WithName("BackyardFireForecast")
-            .WithLocalTime()
+            .WithTimeZone(pst)
             .Execute((e, token) => 
             {
                 BackyardFireForecast.ExecAsync().Wait();
                 return true;
             });
+
 
         // Drawings are Mon, Wed, Sat; notify next mornings
         runtime.CreateSchedule()
@@ -51,6 +55,7 @@ internal class Program
             .AtMinutes(0)
             .AtHours(6)
             .AtDaysOfWeek(0, 2, 4)
+            .WithTimeZone(pst)
             .Execute((e, token) => 
             {
                 Lotteries.PowerballAsync().Wait();
@@ -64,6 +69,7 @@ internal class Program
             .AtMinutes(0)
             .AtHours(6)
             .AtDaysOfWeek(3, 6)
+            .WithTimeZone(pst)
             .Execute((e, token) => 
             {
                 Lotteries.MegaMillionsAsync().Wait();
