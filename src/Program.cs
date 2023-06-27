@@ -25,6 +25,9 @@ internal class Program
 
         var runtime = new TaskEvaluationRuntime();
         AppDomain.CurrentDomain.ProcessExit += (s, e) => runtime.RequestStop();
+        // Set up an unhandled exception handler for tasks
+        runtime.UnhandledScheduledTaskException = (Exception e) => 
+            { Console.WriteLine($"Unhandled error on scheduled task: {e}"); };
 
         var pst = TimeZoneInfo.FindSystemTimeZoneById("America/Los_Angeles");
 

@@ -57,6 +57,11 @@ public static class BackyardFireForecast
         url = hourlyUrl;
         rawJson = await http.GetStreamAsync(url);
         document = JsonNode.Parse(rawJson);
+        if(document != null && document["status"] != null && document!["status"]!.GetValue<int>() == 500)
+        {
+            await Util.Log($"NWS returned HTTP 500 {hourlyUrl}");
+            return;
+        }
 
         var now = DateTimeOffset.Now;
         var periods = document!["properties"]!["periods"]!.AsArray();
