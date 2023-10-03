@@ -41,10 +41,20 @@ public class Lotteries
         var nextJackpotText = document.QuerySelectorAll("div.next-card div.game-detail-group span.game-jackpot-number").First().TextContent;
 
         int nextJackpot = Int32.MaxValue;
-        var match = Regex.Match(nextJackpotText, @"(\d+)");
-        if(match.Success)
+
+        // Check billions first
+        var match = Regex.Match(nextJackpotText, @"(\d+\.?\d*)\s+Billion", RegexOptions.IgnoreCase);
+        if (match.Success)
         {
-            nextJackpot = Int32.Parse(match.Groups[1].Value) * 1_000_000;
+            nextJackpot = (int)(Double.Parse(match.Groups[1].Value) * 1_000_000_000d);
+        }
+        else
+        {
+            match = Regex.Match(nextJackpotText, @"(\d+)");
+            if (match.Success)
+            {
+                nextJackpot = Int32.Parse(match.Groups[1].Value) * 1_000_000;
+            }
         }
         var message = $"Next Powerball: {nextDrawing.ToString("ddd dd MMM")} {nextJackpotText}";
 
