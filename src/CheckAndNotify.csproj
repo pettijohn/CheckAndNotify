@@ -8,7 +8,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="1.0.3" />
-    <PackageReference Include="Microsoft.NET.Build.Containers" Version="0.4.0" />
+    <PackageReference Include="Microsoft.NET.Build.Containers" Version="8.0.100" />
     <PackageReference Include="UnitsNet" Version="5.16.0" />
     <PackageReference Include="TaskSchedulerEngine" Version="23.170.977" />
     <ContainerLabel Include="org.opencontainers.image.source" Value="https://github.com/pettijohn/CheckAndNotify/" />
