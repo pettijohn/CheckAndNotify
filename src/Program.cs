@@ -1,5 +1,4 @@
 
-using Microsoft.AspNetCore.Identity;
 using TaskSchedulerEngine;
 
 internal class Program
@@ -19,9 +18,10 @@ internal class Program
         if (string.IsNullOrEmpty(backyardCron)) throw new ArgumentNullException("BACKYARDFIRE_CRON");
 
         // Run once at startup
-        await Lotteries.MegaMillionsAsync();
-        await Lotteries.PowerballAsync();
-        await BackyardFireForecast.ExecAsync();
+        // Don't do this. An unhandled exception triggers a reboot loop. 
+        //await Lotteries.MegaMillionsAsync();
+        //await Lotteries.PowerballAsync();
+        //await BackyardFireForecast.ExecAsync();
 
         var runtime = new TaskEvaluationRuntime();
         AppDomain.CurrentDomain.ProcessExit += (s, e) => runtime.RequestStop();
