@@ -4,7 +4,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <ContainerImageName>check-and-notify</ContainerImageName>
-    <Version>0.1.13</Version>
+    <ContainerImageTags>0.1.14;latest</ContainerImageTags>
+    <Version>0.1.14</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="1.0.3" />

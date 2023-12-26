@@ -10,6 +10,7 @@ if($version.StartsWith('v')) { Write-Host "Version must only be a number"; exit 
 $projPath = get-item "src\CheckAndNotify.csproj"
 $csproj = [xml] (get-content $projPath)
 $csproj.Project.PropertyGroup.Version = $version
+$csproj.Project.PropertyGroup.ContainerImageTags = "$version;latest"
 $csProj.Save($projPath)
 
 # Ensure git committed (we will tag and push on release)
@@ -22,5 +23,5 @@ wsl -- ./publish.sh $version
 
 # Version it
 git tag $version
-#git push --tags
-Write-Host "Run git push --tags"
+git push --tags
+#Write-Host "Run git push --tags"
