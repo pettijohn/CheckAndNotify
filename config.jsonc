@@ -1,0 +1,19 @@
+[
+    {
+        "Key": "Default",
+        "TelegramUrl": "https://api.telegram.org/bot2045826194:AAGrTVM6ncnVKGB_SnOcbNr94OxzAyaU6SE/sendMessage?chat_id={ChatId}",
+        "ChatId": "-1001912278835"
+    },
+    {
+        "Key": "Lotto",
+        "Extends": "Default",
+        "ChatId": "-999"
+    },
+    {
+        "Key": "BackyardFire",
+        "Extends": "Default",
+        "Coordinates": "47.576061138500165,-122.40379899326307",
+        "Cron": "40  7,16  *  *  *",
+        "NotifyMin": 500
+    }
+]
