@@ -22,4 +22,5 @@ wsl -- ./publish.sh $version
 
 # Version it
 git tag $version
-git push --tags
+#git push --tags
+Write-Host "Run git push --tags"
