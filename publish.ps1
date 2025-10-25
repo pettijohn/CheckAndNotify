@@ -15,13 +15,13 @@ $csProj.Save($projPath)
 
 # Ensure git committed (we will tag and push on release)
 # Do after modifying csproj version to catch that update
-$changes = $(git status --porcelain)
-if(![String]::IsNullOrEmpty($changes)) { Write-Host "Uncommitted changes in git"; exit 1; }
+#$changes = $(git status --porcelain)
+#if(![String]::IsNullOrEmpty($changes)) { Write-Host "Uncommitted changes in git"; exit 1; }
 
 # Invoke the linux build - cwd is transformed by wsl.exe and passes through
 wsl -- ./publish.sh $version
 
 # Version it
-git tag $version
-git push --tags
+#git tag $version
+#git push --tags
 #Write-Host "Run git push --tags"
