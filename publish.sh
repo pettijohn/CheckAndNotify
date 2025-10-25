@@ -4,7 +4,7 @@ if [[ -z $1 ]]; then echo "Version number required" && exit; else VERSION=$1; fi
 
 # https://learn.microsoft.com/en-us/dotnet/core/docker/publish-as-container
 
-dotnet publish --os linux --arch arm64 /t:PublishContainer -c Release
+dotnet publish --os linux --arch amd64 /t:PublishContainer -c Release
 docker image tag check-and-notify:$VERSION ghcr.io/pettijohn/check-and-notify:$VERSION
 docker image tag check-and-notify:$VERSION ghcr.io/pettijohn/check-and-notify:latest
 docker image push ghcr.io/pettijohn/check-and-notify:latest
