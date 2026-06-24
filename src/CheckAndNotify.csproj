@@ -4,13 +4,13 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <ContainerImageName>check-and-notify</ContainerImageName>
-    <ContainerImageTags>0.1.18;latest</ContainerImageTags>
-    <Version>0.1.18</Version>
+    <ContainerImageTags>0.1.19;latest</ContainerImageTags>
+    <Version>0.1.19</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="1.0.3"/>
     <PackageReference Include="UnitsNet" Version="5.16.0"/>
-    <PackageReference Include="TaskSchedulerEngine" Version="26.174.1138"/>
+    <PackageReference Include="TaskSchedulerEngine" Version="26.175.90"/>
     <ContainerLabel Include="org.opencontainers.image.source" Value="https://github.com/pettijohn/CheckAndNotify/"/>
   </ItemGroup>
 </Project>
