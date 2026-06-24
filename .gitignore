@@ -479,3 +479,4 @@ $RECYCLE.BIN/
 secrets/**
 *.env
 .env
+dotnet/runfile-discovery/
